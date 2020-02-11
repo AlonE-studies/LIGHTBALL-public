@@ -52,8 +52,10 @@ switch (bluetooth) {
     case '1' : ON      () ; break;
     case '0' : OFF     () ; break;
   }
-for (int i = 0; i < 255; i++)
-  void ON(){
+for (int i = 0; i < 255; i++);
+  
+  //This turns LEDs ON
+  void ON(){                               
    numberToDisplay = B11111111;
    digitalWrite(latchPin, LOW);
    shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
@@ -61,7 +63,8 @@ for (int i = 0; i < 255; i++)
    delay(10);
      }
   
-void OFF(){
+  //This turns LEDs OFF
+  void OFF(){
    numberToDisplay = B00000000;
    digitalWrite(latchPin, LOW);
    shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
