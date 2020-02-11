@@ -22,6 +22,8 @@ int numberToDisplay = B10000001;
 char bluetooth='S';
 int registerCount = 2;
 int[] numbersToDisplay = int[registerCount];
+int Reg1
+int Reg2
 
 
 void setup() {
@@ -46,19 +48,23 @@ void setup() {
     // pause before next value:
     delay(500);
 }
+
+//Bluetooth part, reading commands from App
 void loop() {
   bluetooth=Serial.read();
 switch (bluetooth) {
     case '1' : ON      () ; break;
     case '0' : OFF     () ; break;
   }
-for (int i = 0; i < 255; i++);
-  
+}
+
   //This turns LEDs ON
-  void ON(){                               
-   numberToDisplay = B11111111;
+  void ON(){  
+   Reg1 = B11111111;
+   Reg2 = B11111111;
    digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
+   shiftOut(dataPin, clockPin, MSBFIRST, reg1);
+   shiftOut(dataPin, clockPin, MSBFIRST, reg2);
    digitalWrite(latchPin, HIGH);
    delay(10);
      }
