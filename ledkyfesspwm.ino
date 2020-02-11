@@ -19,11 +19,9 @@ int dataPin = 11;
 int analogPWM = 150;
 int analogPin = 2;
 int numberToDisplay = B10000001;
-int T = 10;
-int S = 0;
-int Zapnut;
 char bluetooth='S';
-
+int registerCount = 2;
+int[] numbersToDisplay = int[registerCount];
 
 
 void setup() {
@@ -35,9 +33,11 @@ void setup() {
   pinMode(dataPin, OUTPUT);
   pinMode(analogPin, OUTPUT);
   Serial.begin(9600);
+  
     // take the latchPin low so 
     // the LEDs don't change while you're sending in bits:
     digitalWrite(latchPin, LOW);
+ 
     // shift out the bits:
     shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);  
 
@@ -49,39 +49,29 @@ void setup() {
 void loop() {
   bluetooth=Serial.read();
 switch (bluetooth) {
-    case '1' : Zapnut=1      ; break;
-//    case '0' : Vypnut         () ; break;
+    case '1' : ON      () ; break;
+    case '0' : OFF     () ; break;
   }
-//for (int i = 0; i < 255; i++)
-{ i=20;
-  S=T*i/255;
-  if(Zapnut==1){
+for (int i = 0; i < 255; i++)
+  void ON(){
    numberToDisplay = B11111111;
    digitalWrite(latchPin, LOW);
    shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
    digitalWrite(latchPin, HIGH);
-
-   digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
-   digitalWrite(latchPin, HIGH);
-   
-   delay(S);
-// }
- //  void Vypnut(){
+   delay(10);
+     }
+  
+void OFF(){
    numberToDisplay = B00000000;
    digitalWrite(latchPin, LOW);
    shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
    digitalWrite(latchPin, HIGH);
-
-   digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
-   digitalWrite(latchPin, HIGH);
-   
-   delay(T-S);
+   delay(10);
  }
-// void repeat(){
-//    for(int i=0; i<4; i++){
-//    Zapnut();
-//    Vypnut();
+  
+ void repeat(){
+    for(int i=0; i<4; i++){
+    Zapnut();
+    Vypnut();
   }
  }
