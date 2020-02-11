@@ -56,6 +56,12 @@ switch (bluetooth) {
     case '1' : ON() ; break;
     case '0' : OFF() ; break;
   }
+  if (analogPWM = 255)
+{
+  analogPWM = 0;
+}
+analogPWM++;
+analogWrite(analogPin, analogPWM);
 }
 
   //This turns LEDs ON
