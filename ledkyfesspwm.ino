@@ -53,8 +53,8 @@ void setup() {
 void loop() {
   bluetooth=Serial.read();
 switch (bluetooth) {
-    case '1' : ON      () ; break;
-    case '0' : OFF     () ; break;
+    case '1' : ON() ; break;
+    case '0' : OFF() ; break;
   }
 }
 
@@ -71,7 +71,8 @@ switch (bluetooth) {
   
   //This turns LEDs OFF
   void OFF(){
-   numberToDisplay = B00000000;
+   Reg1 = B00000000;
+   Reg2 = B00000000;
    digitalWrite(latchPin, LOW);
    shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
    digitalWrite(latchPin, HIGH);
