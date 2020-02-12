@@ -7,8 +7,8 @@
 //  Date    :   
 //  Modified:                                 
 //  Version :                                            
-//  Notes   :                       
-//****************************************************************
+//  Notes   : ON/OFF working, Lightning cannot be turned off
+//**************************************************************//
 
 //Pin connected to ST_CP of 74HC595
 int latchPin = 8;
@@ -18,12 +18,12 @@ int clockPin = 12;
 int dataPin = 11;
 int analogPWM = 150;
 int analogPin = 2;
-int numberToDisplay = B10000001;
 char bluetooth='S';
-int registerCount = 2;
-int[] numbersToDisplay = int[registerCount];
-int Reg1
-int Reg2
+const int registerCount = 2;
+int numberToDisplay[registerCount];
+int Reg1;
+int Reg2;
+bool stav = 0;
 
 
 void setup() {
@@ -55,6 +55,7 @@ void loop() {
 switch (bluetooth) {
     case '1' : ON() ; break;
     case '0' : OFF() ; break;
+    case 'L' : Lightning();break;
   }
   if (analogPWM = 255)
 {
@@ -66,24 +67,42 @@ analogWrite(analogPin, analogPWM);
 
   //This turns LEDs ON
   void ON(){  
-   Reg1 = B11111111;
-   Reg2 = B11111111;
+   int Reg1 = B11111111;
+   int Reg2 = B11111111;
    digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, MSBFIRST, reg1);
-   shiftOut(dataPin, clockPin, MSBFIRST, reg2);
+   shiftOut(dataPin, clockPin, MSBFIRST, Reg1);
+   shiftOut(dataPin, clockPin, MSBFIRST, Reg2);
    digitalWrite(latchPin, HIGH);
    delay(10);
      }
   
   //This turns LEDs OFF
   void OFF(){
-   Reg1 = B00000000;
-   Reg2 = B00000000;
+   int Reg1 = B00000000;
+   int Reg2 = B00000000;
    digitalWrite(latchPin, LOW);
-   shiftOut(dataPin, clockPin, MSBFIRST, numberToDisplay);
+   shiftOut(dataPin, clockPin, MSBFIRST, Reg1);
+   shiftOut(dataPin, clockPin, MSBFIRST, Reg2);
    digitalWrite(latchPin, HIGH);
    delay(10);
  }
+
+  //This does lightning effect
+  void Lightning(){
+    do {
+    int Reg1 = random(B00000001, B11111111);
+    int Reg2 = random(B00000001, B11111111);
+    int randomDelay = random (10, 200);
+    digitalWrite(latchPin, LOW);
+    shiftOut(dataPin, clockPin, MSBFIRST, Reg1);
+    shiftOut(dataPin, clockPin, MSBFIRST, Reg2);
+    digitalWrite(latchPin, HIGH);
+    delay(randomDelay);
+      bluetooth=Serial.read();
+   } while (bluetooth = '0');
+   //if bluetooth = '0';
+   //break;
+  }
   
  void repeat(){
     for(int i=0; i<4; i++){
