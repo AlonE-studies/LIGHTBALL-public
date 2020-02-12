@@ -23,7 +23,6 @@ const int registerCount = 2;
 int numberToDisplay[registerCount];
 int Reg1;
 int Reg2;
-bool stav = 0;
 
 
 void setup() {
@@ -99,9 +98,7 @@ analogWrite(analogPin, analogPWM);
     digitalWrite(latchPin, HIGH);
     delay(randomDelay);
       bluetooth=Serial.read();
-   } while (bluetooth = '0');
-   //if bluetooth = '0';
-   //break;
+   } while (bluetooth == 'L');
   }
   
  void repeat(){
