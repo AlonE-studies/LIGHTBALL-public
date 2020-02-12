@@ -87,7 +87,7 @@ analogWrite(analogPin, analogPWM);
   
  void repeat(){
     for(int i=0; i<4; i++){
-    Zapnut();
-    Vypnut();
+    ON();
+    OFF();
   }
  }
